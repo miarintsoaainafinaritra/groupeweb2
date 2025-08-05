@@ -1,399 +1,265 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { 
-  FaSearch, 
-  FaTimes, 
-  FaInfoCircle, 
-  FaStar,
-  FaLeaf,
-  FaSkull,
-  FaRulerVertical,
-  FaWeight,
-  FaHeart,
-  FaBolt,
-  FaShieldAlt,
-  FaFire,
-  FaTint,
-  FaRunning,
-  FaChartLine
-} from 'react-icons/fa';
-
-// Import des images
-import list1 from "./assets/images/photo22.jpg";
-import list2 from "./assets/images/photo2.jpg";
-import list3 from "./assets/images/pokemon9.jpg";
-import list4 from "./assets/images/pokemon13.jpg";
-import list5 from "./assets/images/pokemon11.jpg";
-import list6 from "./assets/images/pokemon12.jpg";
-import list7 from "./assets/images/photo1.jpg";
-import list8 from "./assets/images/phot3.jpg";
-import list9 from "./assets/images/pokemon18.jpg";
-import list10 from "./assets/images/photo4.jpg";
-import list11 from "./assets/images/images8.png";
-import list12 from "./assets/images/images9.jpg";
-import list13  from "./assets/images/photo5.jpg";
-import list14 from "./assets/images/pokemon20.jpg";
-import list15 from "./assets/images/pokemon21.jpg";
-const pokemonData = [
-  {
-    id: 1,
-    name: "Meowth Box",
-    image: list1,
-    types: ["electric"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 35 },
-      { stat: { name: "attack" }, base_stat: 55 },
-      { stat: { name: "defense" }, base_stat: 40 },
-      { stat: { name: "special-attack" }, base_stat: 50 },
-      { stat: { name: "special-defense" }, base_stat: 50 },
-      { stat: { name: "speed" }, base_stat: 90 }
-    ],
-    height: 0.4,
-    weight: 6
-  },
-  {
-    id: 2,
-    name: "Bulbasaur",
-    image: list2,
-    types: ["grass", "poison"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 45 },
-      { stat: { name: "attack" }, base_stat: 49 },
-      { stat: { name: "defense" }, base_stat: 49 },
-      { stat: { name: "special-attack" }, base_stat: 65 },
-      { stat: { name: "special-defense" }, base_stat: 65 },
-      { stat: { name: "speed" }, base_stat: 45 }
-    ],
-    height: 0.7,
-    weight: 6.9
-  },
-  // ... Ajoutez les autres Pokémon ici
-
-  {
-    id: 3,
-    name: "Gyarados",
-    image: list3,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 78 },
-      { stat: { name: "attack" }, base_stat: 84 },
-      { stat: { name: "defense" }, base_stat: 78 },
-      { stat: { name: "special-attack" }, base_stat: 109 },
-      { stat: { name: "special-defense" }, base_stat: 85 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 1.7,
-    weight: 90.5
-  },
-  {
-    id:4,
-    name:"Charmander",
-    image: list4,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 2.5,
-    weight: 94.5
-
-  },
-  {
-    id:5,
-    name:"Blastoise",
-    image: list5,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 2.5,
-    weight: 94.5
-
-  },
-  {
-    id:6,
-    name:"Charizard",
-    image: list6,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 2.5,
-    weight: 94.5
-
-  },
-  {
-    id:7,
-    name:"Ivysaur",
-    image: list7,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 2.55,
-    weight: 80.5
-
-  },
-{
-    id:8,
-    name:"Jiggypuff",
-    image: list8,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 1.25,
-    weight: 92.5
-
-  },
-  {
-    id:9,
-    name:"Lucario",
-    image: list9,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 2,
-    weight: 95.5
-
-  },
-  {
-    id:10,
-    name:"Snorlax",
-    image: list10,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 2.5,
-    weight: 94.5
-
-  },
-  {
-    id:11,
-    name:"Pikachu",
-    image: list11,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 0.5,
-    weight: 90.5
-
-  },
-  {
-    id:12,
-    name:"Wartortle",
-    image: list12,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 81 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 81 },
-      { stat: { name: "special-attack" }, base_stat: 119 },
-      { stat: { name: "special-defense" }, base_stat: 87 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 1,
-    weight: 87.5
-
-  },
-  {
-    id:13,
-    name:"L.Majestic",
-    image: list13,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 99 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 92},
-      { stat: { name: "special-attack" }, base_stat: 120 },
-      { stat: { name: "special-defense" }, base_stat: 95 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 3.5,
-    weight: 87.5
-    
-  },
-  {
-     id:14,
-    name:"Metagross",
-    image: list14,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 99 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 92},
-      { stat: { name: "special-attack" }, base_stat: 120 },
-      { stat: { name: "special-defense" }, base_stat: 95 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 3.5,
-    weight: 87.5
-  },
-  {
-     id:15,
-    name:"Cute eevee",
-    image: list15,
-    types: ["fire", "flying"],
-    stats: [
-      { stat: { name: "hp" }, base_stat: 99 },
-      { stat: { name: "attack" }, base_stat: 91 },
-      { stat: { name: "defense" }, base_stat: 92},
-      { stat: { name: "special-attack" }, base_stat: 120 },
-      { stat: { name: "special-defense" }, base_stat: 95 },
-      { stat: { name: "speed" }, base_stat: 100 }
-    ],
-    height: 3.5,
-    weight: 87.5
-  },
-
-];
+import { useState, useEffect } from 'react'
+import { Search, Star, Heart, Zap, Shield, Sword, Sun, Moon } from 'lucide-react'
+import pokeballIcon from './assets/pokemon.png'
+import './App.css'
 
 function App() {
-  const [pokemonList] = useState(pokemonData);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
-  const [favorites, setFavorites] = useState([]);
-  const [searchBy] = useState('name');
-  const [filteredPokemon, setFilteredPokemon] = useState(pokemonData);
+  const [pokemon, setPokemon] = useState([])
+  const [filteredPokemon, setFilteredPokemon] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedPokemon, setSelectedPokemon] = useState(null)
+ 
+  const [favorites, setFavorites] = useState([])
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
+ 
+  const toggleTheme = () => {
+    setIsDarkMode(prev => !prev)
+  }
+
+  
   useEffect(() => {
-    const filtered = pokemonList.filter(pokemon => {
-      if (!searchTerm) return true;
-      
-      switch(searchBy) {
-        case 'name':
-          return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase());
-        case 'type':
-          return pokemon.types.some(type => 
-            type.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-        case 'id':
-          return pokemon.id.toString().includes(searchTerm);
-        default:
-          return true;
+    const fetchPokemon = async () => {
+      try {
+        
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=30')
+        const data = await response.json()
+        
+        const pokemonDetails = await Promise.all(
+          data.results.map(async (pokemon) => {
+            const detailResponse = await fetch(pokemon.url)
+            const detail = await detailResponse.json()
+            return {
+              id: detail.id,
+              name: detail.name,
+              image: detail.sprites.other['official-artwork'].front_default || detail.sprites.front_default,
+              types: detail.types.map(type => type.type.name),
+              height: detail.height,
+              weight: detail.weight,
+              stats: detail.stats,
+              abilities: detail.abilities.map(ability => ability.ability.name)
+            }
+          })
+        )
+        
+        setPokemon(pokemonDetails)
+        setFilteredPokemon(pokemonDetails)
+        
+      } catch (error) {
+        console.error('Error fetching Pokemon:', error)
+     
       }
-    });
-    setFilteredPokemon(filtered);
-  }, [searchTerm, searchBy, pokemonList]);
-
-  const toggleFavorite = (id) => {
-    setFavorites(prev => 
-      prev.includes(id) 
-        ? prev.filter(favId => favId !== id)
-        : [...prev, id]
-    );
-  };
-
-  const getStatColor = (statName) => {
-    switch(statName) {
-      case 'hp': return '#ff6b6b';
-      case 'attack': return '#feca1b';
-      case 'defense': return '#6c79db';
-      case 'special-attack': return '#f9a825';
-      case 'special-defense': return '#6c79db';
-      case 'speed': return '#ee99ac';
-      default: return '#a4a4a4';
     }
-  };
+
+    fetchPokemon()
+  }, [])
+
+  
+  useEffect(() => {
+    const filtered = pokemon.filter(p => 
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.types.some(type => type.toLowerCase().includes(searchTerm.toLowerCase()))
+    )
+    setFilteredPokemon(filtered)
+  }, [searchTerm, pokemon])
+
+  const toggleFavorite = (pokemonId) => {
+    setFavorites(prev => 
+      prev.includes(pokemonId) 
+        ? prev.filter(id => id !== pokemonId)
+        : [...prev, pokemonId]
+    )
+  }
+
+  const getTypeColor = (type) => {
+    const colors = {
+      normal: 'type-normal',
+      fire: 'type-fire',
+      water: 'type-water',
+      electric: 'type-electric',
+      grass: 'type-grass',
+      ice: 'type-ice',
+      fighting: 'type-fighting',
+      poison: 'type-poison',
+      ground: 'type-ground',
+      flying: 'type-flying',
+      psychic: 'type-psychic',
+      bug: 'type-bug',
+      rock: 'type-rock',
+      ghost: 'type-ghost',
+      dragon: 'type-dragon',
+      dark: 'type-dark',
+      steel: 'type-steel',
+      fairy: 'type-fairy'
+    }
+    return colors[type] || 'type-normal'
+  }
+
+  const getStatIcon = (statName) => {
+    switch(statName) {
+      case 'hp': return <Heart size={16} />
+      case 'attack': return <Sword size={16} />
+      case 'defense': return <Shield size={16} />
+      case 'speed': return <Zap size={16} />
+      default: return <Star size={16} />
+    }
+  }
+
+ 
 
   return (
-    <div className="app">
+    <div className={`app-container ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+      {/* Header */}
       <header className="app-header">
-        <h1>Pokémon Gaming</h1>
-        <div className="search-container">
-          <FaSearch className="search-icon" />
-          <input
-            type="text"
-            placeholder={`Rechercher par ${searchBy === 'name' ? 'nom' : searchBy === 'type' ? 'type' : 'ID'}...`}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
-            <button className="clear-search" onClick={() => setSearchTerm('')}>
-              <FaTimes />
+        <div className="header-container">
+          <div className="header-logo">
+            <img src={pokeballIcon} alt="Pokeball" className="logo-image" />
+            <h1 className="app-title">Pokemon Explorer</h1>
+          </div>
+          <div className="header-controls">
+            <button
+              onClick={toggleTheme}
+              className="theme-toggle"
+              title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-          )}
+            <div className="search-container">
+              <Search className="search-icon" size={16} />
+              <input
+                type="text"
+                placeholder="Search Pokemon or type..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+            </div>
+            <span className="pokemon-count">
+              {filteredPokemon.length} Pokemon
+            </span>
+          </div>
         </div>
       </header>
 
-      <main className="main-content">
-        {filteredPokemon.length > 0 ? (
-          <div className="pokemon-grid">
-            {filteredPokemon.map(pokemon => (
-              <div 
-                key={pokemon.id} 
-                className="pokemon-card"
-                onClick={() => setSelectedPokemon(pokemon)}
-              >
-                <div className="pokemon-image-container">
-                  <img 
-                    src={pokemon.image} 
-                    alt={pokemon.name} 
-                    className="pokemon-image"
-                    loading="lazy"
-                  />
-                  <button 
-                    className={`favorite-btn ${favorites.includes(pokemon.id) ? 'favorited' : ''}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(pokemon.id);
-                    }}
+      <div className="main-content">
+        {selectedPokemon ? (
+          /* Pokemon Detail View */
+          <div className="pokemon-detail-container">
+            <button 
+              onClick={() => setSelectedPokemon(null)}
+              className="back-button"
+            >
+              ← Back to List
+            </button>
+            
+            <div className="pokemon-detail-card">
+              <div className="detail-header">
+                <div className="detail-title">
+                  <h2 className="pokemon-name">{selectedPokemon.name}</h2>
+                  <button
+                    onClick={() => toggleFavorite(selectedPokemon.id)}
+                    className="favorite-button"
                   >
-                    <FaStar />
+                    <Heart 
+                      size={24}
+                      className={favorites.includes(selectedPokemon.id) ? 'favorite-active' : ''} 
+                    />
                   </button>
                 </div>
+                <div className="type-container">
+                  {selectedPokemon.types.map(type => (
+                    <span key={type} className={`type-badge ${getTypeColor(type)}`}>
+                      {type}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="detail-content">
+                <div className="pokemon-image-section">
+                  <img 
+                    src={selectedPokemon.image} 
+                    alt={selectedPokemon.name}
+                    className="detail-image"
+                  />
+                  <div className="pokemon-stats">
+                    <div className="stat-item">
+                      <p className="stat-label">Height</p>
+                      <p className="stat-value">{selectedPokemon.height / 10} m</p>
+                    </div>
+                    <div className="stat-item">
+                      <p className="stat-label">Weight</p>
+                      <p className="stat-value">{selectedPokemon.weight / 10} kg</p>
+                    </div>
+                  </div>
+                </div>
+                
                 <div className="pokemon-info">
-                  <h3>{pokemon.name}</h3>
-                  <p className="pokemon-number">#{pokemon.id.toString().padStart(3, '0')}</p>
-                  <div className="pokemon-types">
-                    {pokemon.types.map(type => (
-                      <span key={type} className={`type-badge type-${type}`}>
-                        {type === 'grass' && <FaLeaf className="type-icon" />}
-                        {type === 'poison' && <FaSkull className="type-icon" />}
-                        {type === 'fire' && <FaFire className="type-icon" />}
-                        {type === 'water' && <FaTint className="type-icon" />}
+                  <h3 className="section-title">Stats</h3>
+                  <div className="stats-container">
+                    {selectedPokemon.stats.map(stat => (
+                      <div key={stat.stat.name} className="stat-row">
+                        {getStatIcon(stat.stat.name)}
+                        <span className="stat-name">{stat.stat.name}</span>
+                        <div className="stat-bar">
+                          <div 
+                            className="stat-bar-fill"
+                            style={{ width: `${(stat.base_stat / 255) * 100}%` }}
+                          />
+                        </div>
+                        <span className="stat-value">{stat.base_stat}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <h3 className="section-title">Abilities</h3>
+                  <div className="abilities-container">
+                    {selectedPokemon.abilities.map(ability => (
+                      <span key={ability} className="ability-badge">
+                        {ability.replace('-', ' ')}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+        
+          <div className="pokemon-grid">
+            {filteredPokemon.map(p => (
+              <div 
+                key={p.id} 
+                className="pokemon-card"
+                onClick={() => setSelectedPokemon(p)}
+              >
+                <div className="card-header">
+                  <span className="pokemon-number">
+                    #{p.id.toString().padStart(3, '0')}
+                  </span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      toggleFavorite(p.id)
+                    }}
+                    className="favorite-button"
+                  >
+                    <Heart 
+                      size={16}
+                      className={favorites.includes(p.id) ? 'favorite-active' : ''} 
+                    />
+                  </button>
+                </div>
+                <div className="card-content">
+                  <img 
+                    src={p.image} 
+                    alt={p.name}
+                    className="pokemon-image"
+                  />
+                  <h3 className="pokemon-name">{p.name}</h3>
+                  <div className="type-container">
+                    {p.types.map(type => (
+                      <span key={type} className={`type-badge ${getTypeColor(type)}`}>
                         {type}
                       </span>
                     ))}
@@ -402,119 +268,23 @@ function App() {
               </div>
             ))}
           </div>
-        ) : (
-          <div className="no-results">
-            <FaSearch className="no-results-icon" />
-            <h3>Aucun Pokémon trouvé</h3>
-            <p>Essayez avec un autre terme de recherche</p>
-          </div>
         )}
-      </main>
+      </div>
 
-      {selectedPokemon && (
-        <div className="pokemon-modal" onClick={() => setSelectedPokemon(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-modal" onClick={() => setSelectedPokemon(null)}>
-              <FaTimes />
-            </button>
-            <div className="modal-header">
-              <img 
-                src={selectedPokemon.image} 
-                alt={selectedPokemon.name}
-                className="modal-pokemon-image"
-              />
-              <div className="modal-header-info">
-                <h2>{selectedPokemon.name}</h2>
-                <p className="pokemon-number">#{selectedPokemon.id.toString().padStart(3, '0')}</p>
-                <div className="pokemon-types">
-                  {selectedPokemon.types.map(type => (
-                    <span key={type} className={`type-badge type-${type}`}>
-                      {type === 'grass' && <FaLeaf className="type-icon" />}
-                      {type === 'poison' && <FaSkull className="type-icon" />}
-                      {type === 'fire' && <FaFire className="type-icon" />}
-                      {type === 'water' && <FaTint className="type-icon" />}
-                      {type}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="modal-stats">
-              <div className="stat-item">
-                <h4><FaRulerVertical className="stat-icon" /> Taille</h4>
-                <p>{selectedPokemon.height} m</p>
-              </div>
-              <div className="stat-item">
-                <h4><FaWeight className="stat-icon" /> Poids</h4>
-                <p>{selectedPokemon.weight} kg</p>
-              </div>
-            </div>
-            <div className="modal-section">
-              <h4>Statistiques</h4>
-              <div className="stats-container">
-                {selectedPokemon.stats.map(stat => {
-                  let statIcon;
-                  let statLabel;
-                  switch(stat.stat.name) {
-                    case 'hp':
-                      statIcon = <FaHeart className="stat-icon" />;
-                      statLabel = 'PV';
-                      break;
-                    case 'attack':
-                      statIcon = <FaBolt className="stat-icon" />;
-                      statLabel = 'Attaque';
-                      break;
-                    case 'defense':
-                      statIcon = <FaShieldAlt className="stat-icon" />;
-                      statLabel = 'Défense';
-                      break;
-                    case 'special-attack':
-                      statIcon = <FaBolt className="stat-icon" />;
-                      statLabel = 'Att. Spé.';
-                      break;
-                    case 'special-defense':
-                      statIcon = <FaShieldAlt className="stat-icon" />;
-                      statLabel = 'Déf. Spé.';
-                      break;
-                    case 'speed':
-                      statIcon = <FaRunning className="stat-icon" />;
-                      statLabel = 'Vitesse';
-                      break;
-                    default:
-                      statIcon = <FaChartLine className="stat-icon" />;
-                      statLabel = stat.stat.name;
-                  }
-                  return (
-                    <div key={stat.stat.name} className="stat-bar">
-                      <span className="stat-name">
-                        {statIcon}
-                        {statLabel}
-                      </span>
-                      <div className="stat-bar-container">
-                        <div 
-                          className="stat-bar-fill" 
-                          style={{ 
-                            width: `${Math.min(100, stat.base_stat)}%`,
-                            backgroundColor: getStatColor(stat.stat.name)
-                          }}
-                        ></div>
-                        <span className="stat-value">{stat.base_stat}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+      {/* Footer */}
+      <footer className={`app-footer ${isDarkMode ? 'dark-footer' : 'light-footer'}`}>
+        <div className="footer-content">
+          <p>Pokemon Explorer © {new Date().getFullYear()}</p>
+          
+          <div className="footer-links">
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
           </div>
         </div>
-      )}
-
-      <footer className="app-footer">
-        <p>Pokémon Gaming - Collection Personnalisée</p>
-        <p><FaInfoCircle /> Cliquez sur un Pokémon pour voir ses détails</p>
       </footer>
     </div>
-  );
+  )
 }
 
 export default App;
